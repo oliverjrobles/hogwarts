@@ -1,0 +1,19 @@
+info:
+  name: Get Single Houses
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: http://localhost:3000/houses/:1
+  params:
+    - name: "1"
+      value: ""
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
