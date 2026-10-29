@@ -26,6 +26,20 @@ app.get("/test-db", async (req, res) => {
   }
 });
 
+app.get("/houses", async (req, res) => {
+  try {
+    const houses = await housesRepository.getAllHouses();
+
+    res.status(200).json(houses);
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      error: "Failed to fetch houses",
+    });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
