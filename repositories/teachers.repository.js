@@ -5,3 +5,8 @@ export async function getAllTeachers() {
 
   return result.rows;
 }
+
+export async function getTeacherById(id) {
+  const result = await pool.query("SELECT * FROM teachers WHERE id = $1", [id]);
+  return result.rows[0];
+}
