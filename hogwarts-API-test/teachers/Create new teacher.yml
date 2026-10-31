@@ -1,10 +1,18 @@
 info:
   name: Create new teacher
   type: http
+  seq: 1
 
 http:
   method: POST
   url: http://localhost:3000/teachers
+  body:
+    type: json
+    data: |-
+      {
+        "name": "Albus Dumbledore",
+        "subject": "Defence Against the Dark Arts"
+      }
   auth: inherit
 
 settings:

@@ -5,7 +5,7 @@ info:
 
 http:
   method: DELETE
-  url: http://localhost:3000/courses/1
+  url: http://localhost:3000/courses/6
   auth: inherit
 
 settings:

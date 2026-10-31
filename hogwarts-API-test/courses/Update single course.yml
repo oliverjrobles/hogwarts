@@ -10,7 +10,8 @@ http:
     type: json
     data: |-
       {
-        "name": "Advanced Potions"
+        "name": "Advanced Potions",
+        "teacher_id": 1
       }
   auth: inherit
 
