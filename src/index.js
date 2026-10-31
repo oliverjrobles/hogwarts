@@ -178,6 +178,79 @@ app.get("/courses/:id", async (req, res) => {
   }
 });
 
+app.post("/students", async (req, res) => {
+  try {
+    const { name, house_id } = req.body;
+
+    if (!name || !house_id) {
+      return res.status(400).json({
+        error: "Name and house_id are required",
+      });
+    }
+
+    const student = await studentsRepository.createStudent(name, house_id);
+
+    res.status(201).json(student);
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      error: "Failed to create student",
+    });
+  }
+});
+
+app.put("/students/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const { name, house_id } = req.body;
+
+    if (!name || !house_id) {
+      return res.status(400).json({
+        error: "Name and house_id are required",
+      });
+    }
+
+    const student = await studentsRepository.updateStudent(id, name, house_id);
+
+    if (!student) {
+      return res.status(404).json({
+        error: "Student not found",
+      });
+    }
+
+    res.status(200).json(student);
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      error: "Failed to update student",
+    });
+  }
+});
+
+app.delete("/students/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    const student = await studentsRepository.deleteStudent(id);
+
+    if (!student) {
+      return res.status(404).json({
+        error: "Student not found",
+      });
+    }
+
+    res.status(200).json(student);
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      error: "Failed to delete student",
+    });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
