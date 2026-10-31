@@ -10,6 +10,7 @@ http:
     type: json
     data: |-
       {
+        "id": 7,
         "name": "Harry James Potter",
         "house_id": 1
       }
