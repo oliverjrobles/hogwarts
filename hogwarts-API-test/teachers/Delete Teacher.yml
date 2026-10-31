@@ -1,10 +1,11 @@
 info:
   name: Delete Teacher
   type: http
+  seq: 1
 
 http:
   method: DELETE
-  url: http://localhost:3000/teachers/1
+  url: http://localhost:3000/teachers/7
   auth: inherit
 
 settings:
