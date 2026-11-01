@@ -29,3 +29,21 @@ export async function deleteCourse(id) {
 
   return result.rows[0];
 }
+
+export async function changeCourseTeacher(id, teacherId) {
+  const result = await pool.query("UPDATE courses SET teacher_id = $1 WHERE id = $2 RETURNING *", [teacherId, id]);
+
+  return result.rows[0];
+}
+
+export async function addStudentToCourse(studentId, courseId) {
+  const result = await pool.query("INSERT INTO student_courses (student_id, course_id) VALUES ($1, $2) RETURNING *", [studentId, courseId]);
+
+  return result.rows[0];
+}
+
+export async function removeStudentFromCourse(studentId, courseId) {
+  const result = await pool.query("DELETE FROM student_courses WHERE student_id = $1 AND course_id = $2 RETURNING *", [studentId, courseId]);
+
+  return result.rows[0];
+}
