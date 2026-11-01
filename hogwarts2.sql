@@ -2,12 +2,12 @@
 -- PostgreSQL database dump
 --
 
-\restrict JFINiWJ1dbFx1yYW05oUXqkFstCTCiB44EKN0v2CJWL1nrozM3uS02JKRRkdD97
+\restrict NV4s9w6W48nx2XCqdEZbFWqFdXpHUlZbHqkkuA4uGGCZK8iTQ50DM8gimpOdVDX
 
 -- Dumped from database version 18.6
 -- Dumped by pg_dump version 18.4
 
--- Started on 2026-11-01 21:55:19 CET
+-- Started on 2026-11-01 22:37:33 CET
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -232,14 +232,12 @@ ALTER TABLE ONLY public.teachers ALTER COLUMN id SET DEFAULT nextval('public.tea
 -- Data for Name: courses; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.courses (id, name, teacher_id) FROM stdin;
-2	Potions	2
-3	Charms	3
-4	Herbology	4
-5	Defence Against the Dark Arts	5
-1	Advanced Potions	2
-7	Defense Against the Dark Arts	1
-\.
+INSERT INTO public.courses VALUES (2, 'Potions', 2);
+INSERT INTO public.courses VALUES (3, 'Charms', 3);
+INSERT INTO public.courses VALUES (4, 'Herbology', 4);
+INSERT INTO public.courses VALUES (5, 'Defence Against the Dark Arts', 5);
+INSERT INTO public.courses VALUES (1, 'Advanced Potions', 2);
+INSERT INTO public.courses VALUES (7, 'Defense Against the Dark Arts', 1);
 
 
 --
@@ -248,12 +246,10 @@ COPY public.courses (id, name, teacher_id) FROM stdin;
 -- Data for Name: houses; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.houses (id, name, founder) FROM stdin;
-1	Gryffindor	Godric Gryffindor
-2	Slytherin	Salazar Slytherin
-3	Ravenclaw	Rowena Ravenclaw
-4	Hufflepuff	Helga Hufflepuff
-\.
+INSERT INTO public.houses VALUES (1, 'Gryffindor', 'Godric Gryffindor');
+INSERT INTO public.houses VALUES (2, 'Slytherin', 'Salazar Slytherin');
+INSERT INTO public.houses VALUES (3, 'Ravenclaw', 'Rowena Ravenclaw');
+INSERT INTO public.houses VALUES (4, 'Hufflepuff', 'Helga Hufflepuff');
 
 
 --
@@ -262,19 +258,17 @@ COPY public.houses (id, name, founder) FROM stdin;
 -- Data for Name: student_courses; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.student_courses (student_id, course_id) FROM stdin;
-1	1
-1	2
-1	3
-2	1
-2	2
-2	3
-3	2
-3	3
-4	2
-5	3
-6	4
-\.
+INSERT INTO public.student_courses VALUES (1, 1);
+INSERT INTO public.student_courses VALUES (1, 2);
+INSERT INTO public.student_courses VALUES (1, 3);
+INSERT INTO public.student_courses VALUES (2, 1);
+INSERT INTO public.student_courses VALUES (2, 2);
+INSERT INTO public.student_courses VALUES (2, 3);
+INSERT INTO public.student_courses VALUES (3, 2);
+INSERT INTO public.student_courses VALUES (3, 3);
+INSERT INTO public.student_courses VALUES (4, 2);
+INSERT INTO public.student_courses VALUES (5, 3);
+INSERT INTO public.student_courses VALUES (6, 4);
 
 
 --
@@ -283,14 +277,12 @@ COPY public.student_courses (student_id, course_id) FROM stdin;
 -- Data for Name: students; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.students (id, name, house_id) FROM stdin;
-2	Hermione Granger	1
-3	Ron Weasley	1
-4	Draco Malfoy	2
-5	Luna Lovegood	3
-6	Cedric Diggory	4
-1	Harry James Potter	1
-\.
+INSERT INTO public.students VALUES (2, 'Hermione Granger', 1);
+INSERT INTO public.students VALUES (3, 'Ron Weasley', 1);
+INSERT INTO public.students VALUES (4, 'Draco Malfoy', 2);
+INSERT INTO public.students VALUES (5, 'Luna Lovegood', 3);
+INSERT INTO public.students VALUES (6, 'Cedric Diggory', 4);
+INSERT INTO public.students VALUES (1, 'Harry James Potter', 1);
 
 
 --
@@ -299,14 +291,12 @@ COPY public.students (id, name, house_id) FROM stdin;
 -- Data for Name: teachers; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.teachers (id, name, subject) FROM stdin;
-1	Minerva McGonagall	Transfiguration
-2	Severus Snape	Potions
-3	Filius Flitwick	Charms
-4	Pomona Sprout	Herbology
-5	Remus Lupin	Defence Against the Dark Arts
-6	Albus Dumbledore	Defence Against the Dark Arts
-\.
+INSERT INTO public.teachers VALUES (1, 'Minerva McGonagall', 'Transfiguration');
+INSERT INTO public.teachers VALUES (2, 'Severus Snape', 'Potions');
+INSERT INTO public.teachers VALUES (3, 'Filius Flitwick', 'Charms');
+INSERT INTO public.teachers VALUES (4, 'Pomona Sprout', 'Herbology');
+INSERT INTO public.teachers VALUES (5, 'Remus Lupin', 'Defence Against the Dark Arts');
+INSERT INTO public.teachers VALUES (6, 'Albus Dumbledore', 'Defence Against the Dark Arts');
 
 
 --
@@ -426,11 +416,11 @@ ALTER TABLE ONLY public.students
     ADD CONSTRAINT students_house_id_fkey FOREIGN KEY (house_id) REFERENCES public.houses(id);
 
 
--- Completed on 2026-11-01 21:55:20 CET
+-- Completed on 2026-11-01 22:37:34 CET
 
 --
 -- PostgreSQL database dump complete
 --
 
-\unrestrict JFINiWJ1dbFx1yYW05oUXqkFstCTCiB44EKN0v2CJWL1nrozM3uS02JKRRkdD97
+\unrestrict NV4s9w6W48nx2XCqdEZbFWqFdXpHUlZbHqkkuA4uGGCZK8iTQ50DM8gimpOdVDX
 
