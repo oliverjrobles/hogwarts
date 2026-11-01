@@ -254,6 +254,60 @@ app.delete("/courses/:id", async (req, res) => {
   }
 });
 
+//skift lærer på et eksisterende kursus!!!//
+app.put("/courses/:id/teacher", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const { teacher_id } = req.body;
+
+    if (!teacher_id) {
+      return res.status(400).json({
+        error: "teacher_id is required",
+      });
+    }
+
+    const course = await coursesRepository.changeCourseTeacher(id, teacher_id);
+
+    if (!course) {
+      return res.status(404).json({
+        error: "Course not found",
+      });
+    }
+
+    res.status(200).json(course);
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      error: "Failed to change course teacher",
+    });
+  }
+});
+
+//tilføj elev til kursus//
+app.post("/courses/:id/students", async (req, res) => {
+  try {
+    const courseId = req.params.id;
+    const { student_id } = req.body;
+
+    if (!student_id) {
+      return res.status(400).json({
+        error: "student_id is required",
+      });
+    }
+
+    const enrollment = await coursesRepository.addStudentToCourse(student_id, courseId);
+
+    res.status(201).json(enrollment);
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      error: "Failed to add student to course",
+    });
+  }
+});
+
 //Lave, opdatere og slette elev//
 app.post("/students", async (req, res) => {
   try {
@@ -324,6 +378,30 @@ app.delete("/students/:id", async (req, res) => {
 
     res.status(500).json({
       error: "Failed to delete student",
+    });
+  }
+});
+
+//fjern elev fra kursus//
+app.delete("/courses/:id/students/:studentId", async (req, res) => {
+  try {
+    const courseId = req.params.id;
+    const studentId = req.params.studentId;
+
+    const enrollment = await coursesRepository.removeStudentFromCourse(studentId, courseId);
+
+    if (!enrollment) {
+      return res.status(404).json({
+        error: "Student is not enrolled in this course",
+      });
+    }
+
+    res.status(200).json(enrollment);
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      error: "Failed to remove student from course",
     });
   }
 });

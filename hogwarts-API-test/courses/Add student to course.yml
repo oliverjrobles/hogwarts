@@ -1,10 +1,17 @@
 info:
   name: Add student to course
   type: http
+  seq: 1
 
 http:
-  method: PUT
-  url: http://localhost:3000/courses/1/students/2
+  method: POST
+  url: http://localhost:3000/courses/1/students
+  body:
+    type: json
+    data: |-
+      {
+        "student_id": 5
+      }
   auth: inherit
 
 settings:
