@@ -5,14 +5,13 @@ info:
 
 http:
   method: PUT
-  url: http://localhost:3000/students/1
+  url: http://localhost:3000/students/9999
   body:
     type: json
     data: |-
       {
-        "id": 7,
-        "name": "Harry James Potter",
-        "house_id": 1
+        "name": "Neville Longbottom Updated",
+        "house_id": 2
       }
   auth: inherit
 
