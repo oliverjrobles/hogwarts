@@ -1,170 +1,105 @@
 import * as coursesRepository from "../repositories/courses.repository.js";
+import HTTPError from "../errorHandling/HTTPError.js";
 
-//hent alle kurser//
+// hent alle kurser //
 export async function getAllCourses(req, res) {
-  try {
-    const courses = await coursesRepository.getAllCourses();
+  const courses = await coursesRepository.getAllCourses();
 
-    res.status(200).json(courses);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      error: "Failed to fetch courses",
-    });
-  }
+  return res.status(200).json(courses);
 }
 
-//hent et bestemt kursus//
+// hent et bestemt kursus //
 export async function getCourseById(req, res) {
-  try {
-    const id = req.params.id;
+  const id = req.params.id;
 
-    const course = await coursesRepository.getCourseById(id);
+  const course = await coursesRepository.getCourseById(id);
 
-    if (!course) {
-      return res.status(404).json({
-        error: "Course not found",
-      });
-    }
-
-    res.status(200).json(course);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      error: "Failed to fetch course",
-    });
+  if (!course) {
+    throw new HTTPError(404, "Course not found");
   }
+
+  return res.status(200).json(course);
 }
 
-//opdater et kursus//
+// opdater et kursus //
 export async function updateCourse(req, res) {
-  try {
-    const { id } = req.params;
-    const { name, teacher_id } = req.body;
+  const { id } = req.params;
+  const { name, teacher_id } = req.body;
 
-    const course = await coursesRepository.updateCourse(id, name, teacher_id);
+  const course = await coursesRepository.updateCourse(id, name, teacher_id);
 
-    if (!course) {
-      return res.status(404).json({
-        error: "Course not found",
-      });
-    }
-
-    res.status(200).json(course);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      error: "Failed to update course",
-    });
+  if (!course) {
+    throw new HTTPError(404, "Course not found");
   }
+
+  return res.status(200).json(course);
 }
 
-//slet et kursus//
+// slet et kursus //
 export async function deleteCourse(req, res) {
-  try {
-    const { id } = req.params;
+  const { id } = req.params;
 
-    const course = await coursesRepository.deleteCourse(id);
+  const course = await coursesRepository.deleteCourse(id);
 
-    if (!course) {
-      return res.status(404).json({
-        error: "Course not found",
-      });
-    }
-
-    res.status(200).json({
-      message: "Course deleted successfully",
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      error: "Failed to delete course",
-    });
+  if (!course) {
+    throw new HTTPError(404, "Course not found");
   }
+
+  return res.status(204).send();
 }
 
-//skift lærer på et kursus//
+// skift lærer på et kursus //
 export async function updateCourseTeacher(req, res) {
-  try {
-    const { id } = req.params;
-    const { teacher_id } = req.body;
+  const { id } = req.params;
+  const { teacher_id } = req.body;
 
-    const course = await coursesRepository.updateCourseTeacher(id, teacher_id);
+  const course = await coursesRepository.updateCourseTeacher(id, teacher_id);
 
-    if (!course) {
-      return res.status(404).json({
-        error: "Course not found",
-      });
-    }
-
-    res.status(200).json(course);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      error: "Failed to update course teacher",
-    });
+  if (!course) {
+    throw new HTTPError(404, "Course not found");
   }
+
+  return res.status(200).json(course);
 }
 
-//tilføj en elev til et kursus//
+// tilføj en elev til et kursus //
 export async function addStudentToCourse(req, res) {
-  try {
-    const { id } = req.params;
-    const { student_id } = req.body;
+  const { id } = req.params;
+  const { student_id } = req.body;
 
-    const result = await coursesRepository.addStudentToCourse(id, student_id);
+  const result = await coursesRepository.addStudentToCourse(id, student_id);
 
-    if (!result) {
-      return res.status(404).json({
-        error: "Course or student not found",
-      });
-    }
-
-    res.status(201).json(result);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      error: "Failed to add student to course",
-    });
+  if (!result) {
+    throw new HTTPError(404, "Course or student not found");
   }
+
+  return res.status(201).json(result);
 }
 
-//fjern en elev fra et kursus//
+// fjern en elev fra et kursus //
 export async function removeStudentFromCourse(req, res) {
-  try {
-    const { id, studentId } = req.params;
+  const { id, studentId } = req.params;
 
-    const result = await coursesRepository.removeStudentFromCourse(id, studentId);
+  const result = await coursesRepository.removeStudentFromCourse(id, studentId);
 
-    if (!result) {
-      return res.status(404).json({
-        error: "Student is not enrolled in this course",
-      });
-    }
-
-    res.status(200).json({
-      message: "Student removed from course successfully",
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      error: "Failed to remove student from course",
-    });
+  if (!result) {
+    throw new HTTPError(404, "Student is not enrolled in this course");
   }
+
+  return res.status(200).json({
+    message: "Student removed from course successfully",
+  });
 }
 
-//opret et nyt kursus//
+// opret et nyt kursus //
 export async function createCourse(req, res) {
-  try {
-    const { name, teacher_id } = req.body;
+  const { name, teacher_id } = req.body;
 
-    const course = await coursesRepository.createCourse(name, teacher_id);
-
-    res.status(201).json(course);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      error: "Failed to create course",
-    });
+  if (!name || !teacher_id) {
+    throw new HTTPError(400, "Name and teacher_id are required");
   }
+
+  const course = await coursesRepository.createCourse(name, teacher_id);
+
+  return res.status(201).json(course);
 }

@@ -1,30 +1,22 @@
 import * as housesRepository from "../repositories/houses.repository.js";
+import HTTPError from "../errorHandling/HTTPError.js";
 
-//hent alle houses//
+// hent alle houses //
 export async function getAllHouses(req, res) {
-  try {
-    const houses = await housesRepository.getAllHouses();
+  const houses = await housesRepository.getAllHouses();
 
-    res.status(200).json(houses);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to fetch houses" });
-  }
+  return res.status(200).json(houses);
 }
 
-//hent et bestemt house//
+// hent et bestemt house //
 export async function getHouseById(req, res) {
-  try {
-    const id = req.params.id;
-    const house = await housesRepository.getHouseById(id);
+  const id = req.params.id;
 
-    if (!house) {
-      return res.status(404).json({ error: "House not found" });
-    }
+  const house = await housesRepository.getHouseById(id);
 
-    res.status(200).json(house);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to fetch house" });
+  if (!house) {
+    throw new HTTPError(404, "House not found");
   }
+
+  return res.status(200).json(house);
 }

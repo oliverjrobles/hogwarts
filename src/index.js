@@ -5,11 +5,13 @@ import coursesRoutes from "../routes/courses.routes.js";
 import "dotenv/config";
 import express from "express";
 import { pool } from "../db.js";
+import errorhandler from "../errorHandling/errorhandler.js";
 
 const app = express();
 const PORT = 3000;
 
 app.use(express.json());
+
 app.use("/houses", housesRoutes);
 app.use("/teachers", teachersRoutes);
 app.use("/students", studentsRoutes);
@@ -32,6 +34,14 @@ app.get("/test-db", async (req, res) => {
     });
   }
 });
+
+app.get("/test-error", (req, res, next) => {
+  const error = new Error("Dette er en testfejl");
+  error.statusCode = 400;
+  next(error);
+});
+
+app.use(errorhandler);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

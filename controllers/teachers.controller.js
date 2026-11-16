@@ -1,102 +1,71 @@
 import * as teachersRepository from "../repositories/teachers.repository.js";
+import UpdateTeacherDto from "../dtos/updateteacher.dto.js";
+import HTTPError from "../errorHandling/HTTPError.js";
 
-//hent alle lærere//
+// hent alle lærere //
 export async function getAllTeachers(req, res) {
-  try {
-    const teachers = await teachersRepository.getAllTeachers();
+  const teachers = await teachersRepository.getAllTeachers();
 
-    res.status(200).json(teachers);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to fetch teachers" });
-  }
+  return res.status(200).json(teachers);
 }
 
-//hent en bestemt lærer//
+// hent en bestemt lærer //
 export async function getTeacherById(req, res) {
-  try {
-    const id = req.params.id;
+  const id = req.params.id;
 
-    const teacher = await teachersRepository.getTeacherById(id);
+  const teacher = await teachersRepository.getTeacherById(id);
 
-    if (!teacher) {
-      return res.status(404).json({ error: "Teacher not found" });
-    }
-
-    res.status(200).json(teacher);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to fetch teacher" });
+  if (!teacher) {
+    throw new HTTPError(404, "Teacher not found");
   }
+
+  return res.status(200).json(teacher);
 }
 
-//opret en ny lærer//
+// opret en ny lærer //
 export async function createTeacher(req, res) {
-  try {
-    const { name, subject } = req.body;
+  const { name, subject } = req.body;
 
-    if (!name || !subject) {
-      return res.status(400).json({
-        error: "Name and subject are required",
-      });
-    }
-
-    const teacher = await teachersRepository.createTeacher(name, subject);
-
-    res.status(201).json(teacher);
-  } catch (error) {
-    console.error(error);
-
-    res.status(500).json({
-      error: "Failed to create teacher",
-    });
+  if (!name || !subject) {
+    throw new HTTPError(400, "Name and subject are required");
   }
+
+  const teacher = await teachersRepository.createTeacher(name, subject);
+
+  return res.status(201).json(teacher);
 }
 
-//opdater en eksisterende lærer//
+// opdater en eksisterende lærer //
 export async function updateTeacher(req, res) {
-  try {
-    const id = req.params.id;
-    const { name, subject } = req.body;
+  const id = req.params.id;
 
-    const teacher = await teachersRepository.updateTeacher(id, name, subject);
+  // Valider data med Zod
+  const result = UpdateTeacherDto.safeParse(req.body);
 
-    if (!teacher) {
-      return res.status(404).json({
-        error: "Teacher not found",
-      });
-    }
-
-    res.status(200).json(teacher);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      error: "Failed to update teacher",
-    });
+  if (!result.success) {
+    throw new HTTPError(400, "Invalid teacher data");
   }
+
+  const { name, subject } = result.data;
+
+  const teacher = await teachersRepository.updateTeacher(id, name, subject);
+
+  if (!teacher) {
+    throw new HTTPError(404, "Teacher not found");
+  }
+
+  return res.status(200).json(teacher);
 }
 
-//slet en lærer//
+// slet en lærer //
 export async function deleteTeacher(req, res) {
-  try {
-    const id = req.params.id;
+  const id = req.params.id;
 
-    const teacher = await teachersRepository.deleteTeacher(id);
+  const teacher = await teachersRepository.deleteTeacher(id);
 
-    if (!teacher) {
-      return res.status(404).json({
-        error: "Teacher not found",
-      });
-    }
-
-    res.status(200).json({
-      message: "Teacher deleted successfully",
-    });
-  } catch (error) {
-    console.error(error);
-
-    res.status(500).json({
-      error: "Failed to delete teacher",
-    });
+  if (!teacher) {
+    throw new HTTPError(404, "Teacher not found");
   }
+
+  return res.status(204).send();
 }
