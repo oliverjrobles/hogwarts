@@ -1,0 +1,24 @@
+info:
+  name: Create new exam
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:3000/exams
+  body:
+    type: json
+    data: |
+
+      {
+        "course_id": 1,
+        "student_id": 1,
+        "grade_id": 1
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

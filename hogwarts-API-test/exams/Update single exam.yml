@@ -1,0 +1,24 @@
+info:
+  name: Update single exam
+  type: http
+  seq: 1
+
+http:
+  method: PUT
+  url: http://localhost:3000/exams/1
+  body:
+    type: json
+    data: |
+
+      {
+        "course_id": 1,
+        "student_id": 1,
+        "grade_id": 2
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

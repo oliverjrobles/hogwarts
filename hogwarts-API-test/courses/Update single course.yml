@@ -5,13 +5,17 @@ info:
 
 http:
   method: PUT
-  url: http://localhost:3000/courses/1
+  url: http://localhost:3000/courses/5
   body:
     type: json
-    data: |-
+    data: |
+
       {
-        "name": "Advanced Potions",
-        "teacher_id": 1
+        "name": "Advanced Defence Against the Dark Arts",
+        "teacher_id": 1,
+        "type": "core",
+        "level": "NEWT",
+        "school_year": 6
       }
   auth: inherit
 

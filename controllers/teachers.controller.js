@@ -24,13 +24,13 @@ export async function getTeacherById(req, res) {
 
 // opret en ny lærer //
 export async function createTeacher(req, res) {
-  const { name, subject } = req.body;
+  const { name, subject, employment_start, currently_active, deceased } = req.body;
 
-  if (!name || !subject) {
-    throw new HTTPError(400, "Name and subject are required");
+  if (!name || !subject || !employment_start || typeof currently_active !== "boolean" || typeof deceased !== "boolean") {
+    throw new HTTPError(400, "All teacher fields are required");
   }
 
-  const teacher = await teachersRepository.createTeacher(name, subject);
+  const teacher = await teachersRepository.createTeacher(name, subject, employment_start, currently_active, deceased);
 
   return res.status(201).json(teacher);
 }
@@ -46,9 +46,9 @@ export async function updateTeacher(req, res) {
     throw new HTTPError(400, "Invalid teacher data");
   }
 
-  const { name, subject } = result.data;
+  const { name, subject, employment_start, currently_active, deceased } = result.data;
 
-  const teacher = await teachersRepository.updateTeacher(id, name, subject);
+  const teacher = await teachersRepository.updateTeacher(id, name, subject, employment_start, currently_active, deceased);
 
   if (!teacher) {
     throw new HTTPError(404, "Teacher not found");

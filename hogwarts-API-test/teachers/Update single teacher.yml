@@ -5,13 +5,17 @@ info:
 
 http:
   method: PUT
-  url: http://localhost:3000/teachers/7
+  url: http://localhost:3000/teachers/22
   body:
     type: json
-    data: |-
+    data: |
+
       {
-        "name": "Albus Percival Dumbledore",
-        "subject": "Transfiguration"
+        "name": "Remus Lupin",
+        "subject": "Defence Against the Dark Arts",
+        "employment_start": "1993-09-01",
+        "currently_active": false,
+        "deceased": true
       }
   auth: inherit
 

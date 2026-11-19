@@ -8,10 +8,14 @@ http:
   url: http://localhost:3000/teachers
   body:
     type: json
-    data: |-
+    data: |
+
       {
-        "name": "Albus Dumbledore",
-        "subject": "Defence Against the Dark Arts"
+        "name": "Remus Lupin",
+        "subject": "Defence Against the Dark Arts",
+        "employment_start": "1993-09-01",
+        "currently_active": true,
+        "deceased": false
       }
   auth: inherit
 

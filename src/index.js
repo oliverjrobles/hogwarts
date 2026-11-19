@@ -6,6 +6,8 @@ import "dotenv/config";
 import express from "express";
 import { pool } from "../db.js";
 import errorhandler from "../errorHandling/errorhandler.js";
+import gradesRoutes from "../routes/grades.routes.js";
+import examsRoutes from "../routes/exams.routes.js";
 
 const app = express();
 const PORT = 3000;
@@ -16,6 +18,8 @@ app.use("/houses", housesRoutes);
 app.use("/teachers", teachersRoutes);
 app.use("/students", studentsRoutes);
 app.use("/courses", coursesRoutes);
+app.use("/grades", gradesRoutes);
+app.use("/exams", examsRoutes);
 
 app.get("/", (req, res) => {
   res.status(200).json({

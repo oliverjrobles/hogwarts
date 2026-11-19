@@ -8,10 +8,13 @@ http:
   url: http://localhost:3000/students
   body:
     type: json
-    data: |-
+    data: |
+
       {
-        "name": "Neville Longbottom",
-        "house_id": 1
+        "name": "Harry Potter",
+        "house_id": 1,
+        "birthday": "1980-07-31",
+        "school_year": 5
       }
   auth: inherit
 
